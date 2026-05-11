@@ -60,16 +60,16 @@ gemini mcp add gcp-logos python /absolute/path/to/gcp-logos-mcp/server.py --tran
 
 ### Deployed Configuration (Cloud Run / SSE)
 
-When deployed to Google Cloud Run, the server falls back to exposing an **SSE** endpoint at `https://<YOUR_CLOUD_RUN_URL>/sse`. 
+When deployed to Google Cloud Run, the server falls back to exposing an **SSE** endpoint at `https://<YOUR_CLOUD_RUN_URL>/mcp`. 
 
 **Claude Code:**
 ```bash
-claude mcp add gcp-logos --transport sse https://<YOUR_CLOUD_RUN_URL>/sse
+claude mcp add gcp-logos --transport sse https://<YOUR_CLOUD_RUN_URL>/mcp
 ```
 
 **Gemini CLI:**
 ```bash
-gemini mcp add gcp-logos --transport sse https://<YOUR_CLOUD_RUN_URL>/sse
+gemini mcp add gcp-logos --transport sse https://<YOUR_CLOUD_RUN_URL>/mcp
 ```
 
 ### Google Antigravity
@@ -81,7 +81,7 @@ Antigravity maintains its own isolated MCP configuration file. To enable this se
 {
   "mcpServers": {
     "gcp-logos-mcp": {
-      "serverUrl": "https://<YOUR_CLOUD_RUN_URL>/sse"
+      "serverUrl": "https://<YOUR_CLOUD_RUN_URL>/mcp"
     }
   }
 }
