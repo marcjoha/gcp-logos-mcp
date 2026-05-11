@@ -33,52 +33,50 @@ Follow these steps to install and run the MCP server on a client computer:
    ```
    *Internal Troubleshooting:* If you experience authentication problems with `pip` (e.g., due to internal artifact repositories), you may need to refresh your credentials. Run `gcert` to authenticate, and then run `gpkg setup` to configure your local package managers before attempting to run `pip install` again.
 
-4. **Start the server**:
+4. **Start the server (Optional, for local SSE)**:
+   If you want to run the server locally over an HTTP/SSE endpoint (like it runs on Cloud Run):
    ```bash
    python server.py
    ```
-   The server will start and expose an SSE (Server-Sent Events) endpoint at `http://localhost:8080/sse`.
+   This will start the Uvicorn server on `http://localhost:8080`.
 
 ## Client Configuration
 
-To use this MCP server with an MCP client (such as Claude Code, Gemini CLI, or a compatible desktop app), you must configure your client to use the **SSE (Server-Sent Events)** transport and point it to the endpoint URL:
+Because this server uses the **FastMCP** library, it natively supports both standard I/O (for local execution) and **SSE (Server-Sent Events)** (for Cloud Run deployments).
 
-- **Local:** `http://localhost:8080/sse`
-- **Deployed:** `https://<YOUR_CLOUD_RUN_URL>/sse`
+### Local Configuration (Standard I/O)
 
-*(Note: The server uses an SSE transport over HTTP rather than standard I/O.)*
+For local development and usage, the easiest method is to let your client execute the python script directly using standard I/O transport. 
 
-### Claude Code
-
-To add this server to Claude Code, run the following command in your terminal:
-
+**Claude Code:**
 ```bash
-# For a local server
-claude mcp add gcp-logos --transport sse http://localhost:8080/sse
+claude mcp add gcp-logos python /absolute/path/to/gcp-logos-mcp/server.py --transport stdio
+```
 
-# For a deployed server
+**Gemini CLI:**
+```bash
+gemini mcp add gcp-logos python /absolute/path/to/gcp-logos-mcp/server.py --transport stdio
+```
+
+### Deployed Configuration (Cloud Run / SSE)
+
+When deployed to Google Cloud Run, the server falls back to exposing an **SSE** endpoint at `https://<YOUR_CLOUD_RUN_URL>/sse`. 
+
+**Claude Code:**
+```bash
 claude mcp add gcp-logos --transport sse https://<YOUR_CLOUD_RUN_URL>/sse
 ```
 
-### Gemini CLI
-
-To add this server to Gemini CLI, use the following command:
-
+**Gemini CLI:**
 ```bash
-# For a local server
-gemini mcp add gcp-logos --transport sse http://localhost:8080/sse
-
-# For a deployed server
 gemini mcp add gcp-logos --transport sse https://<YOUR_CLOUD_RUN_URL>/sse
 ```
 
 ### Google Antigravity
 
-Antigravity maintains its own isolated MCP configuration file. To enable this server, you must edit `~/.gemini/antigravity/mcp_config.json` manually:
+Antigravity maintains its own isolated MCP configuration file. To enable this server, you must edit `~/.gemini/antigravity/mcp_config.json` manually.
 
-1. Open `~/.gemini/antigravity/mcp_config.json` in a text editor.
-2. Add the `gcp-logos-mcp` entry under the `mcpServers` block:
-
+**For a deployed Cloud Run SSE server:**
 ```json
 {
   "mcpServers": {
@@ -88,7 +86,18 @@ Antigravity maintains its own isolated MCP configuration file. To enable this se
   }
 }
 ```
-*(If you are running the server locally, use `http://localhost:8080/sse` instead).*
+
+**For a local stdio execution:**
+```json
+{
+  "mcpServers": {
+    "gcp-logos-mcp": {
+      "command": "python",
+      "args": ["/absolute/path/to/gcp-logos-mcp/server.py", "--transport", "stdio"]
+    }
+  }
+}
+```
 
 3. Restart Antigravity or reload your workspace for the new server to be initialized.
 
