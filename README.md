@@ -44,22 +44,16 @@ Follow these steps to install and run the MCP server on a client computer:
 
 Because this server uses the **FastMCP** library, it natively supports both standard I/O (for local execution) and **SSE (Server-Sent Events)** (for Cloud Run deployments).
 
-### Local Configuration (Standard I/O)
+### Gemini CLI
 
+**Local Configuration (Standard I/O):**
 For local development and usage, the easiest method is to let your client execute the python script directly using standard I/O transport. 
-
-
-**Gemini CLI:**
 ```bash
 gemini mcp add gcp-logos python /absolute/path/to/gcp-logos-mcp/server.py
 ```
 
-### Deployed Configuration (Cloud Run / SSE)
-
-When deployed to Google Cloud Run, the server falls back to exposing an **SSE** endpoint at `https://<YOUR_CLOUD_RUN_URL>/mcp`. 
-
-
-**Gemini CLI:**
+**Deployed Configuration (Cloud Run / SSE):**
+When deployed to Google Cloud Run, the server exposes an endpoint at `https://<YOUR_CLOUD_RUN_URL>/mcp`. 
 ```bash
 gemini mcp add gcp-logos https://<YOUR_CLOUD_RUN_URL>/mcp
 ```
@@ -68,24 +62,24 @@ gemini mcp add gcp-logos https://<YOUR_CLOUD_RUN_URL>/mcp
 
 Antigravity maintains its own isolated MCP configuration file. To enable this server, you must edit `~/.gemini/antigravity/mcp_config.json` manually.
 
-**For a deployed Cloud Run SSE server:**
-```json
-{
-  "mcpServers": {
-    "gcp-logos-mcp": {
-      "serverUrl": "https://<YOUR_CLOUD_RUN_URL>/mcp"
-    }
-  }
-}
-```
-
-**For a local stdio execution:**
+**Local Configuration (Standard I/O):**
 ```json
 {
   "mcpServers": {
     "gcp-logos-mcp": {
       "command": "python",
       "args": ["/absolute/path/to/gcp-logos-mcp/server.py"]
+    }
+  }
+}
+```
+
+**Deployed Configuration (Cloud Run / SSE):**
+```json
+{
+  "mcpServers": {
+    "gcp-logos-mcp": {
+      "serverUrl": "https://<YOUR_CLOUD_RUN_URL>/mcp"
     }
   }
 }
