@@ -64,12 +64,12 @@ When deployed to Google Cloud Run, the server falls back to exposing an **SSE** 
 
 **Claude Code:**
 ```bash
-claude mcp add gcp-logos --transport sse https://<YOUR_CLOUD_RUN_URL>/mcp
+claude mcp add gcp-logos https://<YOUR_CLOUD_RUN_URL>/mcp
 ```
 
 **Gemini CLI:**
 ```bash
-gemini mcp add gcp-logos --transport sse https://<YOUR_CLOUD_RUN_URL>/mcp
+gemini mcp add gcp-logos https://<YOUR_CLOUD_RUN_URL>/mcp
 ```
 
 ### Google Antigravity
