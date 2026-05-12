@@ -48,10 +48,6 @@ Because this server uses the **FastMCP** library, it natively supports both stan
 
 For local development and usage, the easiest method is to let your client execute the python script directly using standard I/O transport. 
 
-**Claude Code:**
-```bash
-claude mcp add gcp-logos python /absolute/path/to/gcp-logos-mcp/server.py
-```
 
 **Gemini CLI:**
 ```bash
@@ -62,10 +58,6 @@ gemini mcp add gcp-logos python /absolute/path/to/gcp-logos-mcp/server.py
 
 When deployed to Google Cloud Run, the server falls back to exposing an **SSE** endpoint at `https://<YOUR_CLOUD_RUN_URL>/mcp`. 
 
-**Claude Code:**
-```bash
-claude mcp add gcp-logos https://<YOUR_CLOUD_RUN_URL>/mcp
-```
 
 **Gemini CLI:**
 ```bash
