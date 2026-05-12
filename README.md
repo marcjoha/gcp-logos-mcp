@@ -50,12 +50,12 @@ For local development and usage, the easiest method is to let your client execut
 
 **Claude Code:**
 ```bash
-claude mcp add gcp-logos python /absolute/path/to/gcp-logos-mcp/server.py --transport stdio
+claude mcp add gcp-logos python /absolute/path/to/gcp-logos-mcp/server.py
 ```
 
 **Gemini CLI:**
 ```bash
-gemini mcp add gcp-logos python /absolute/path/to/gcp-logos-mcp/server.py --transport stdio
+gemini mcp add gcp-logos python /absolute/path/to/gcp-logos-mcp/server.py
 ```
 
 ### Deployed Configuration (Cloud Run / SSE)
@@ -93,7 +93,7 @@ Antigravity maintains its own isolated MCP configuration file. To enable this se
   "mcpServers": {
     "gcp-logos-mcp": {
       "command": "python",
-      "args": ["/absolute/path/to/gcp-logos-mcp/server.py", "--transport", "stdio"]
+      "args": ["/absolute/path/to/gcp-logos-mcp/server.py"]
     }
   }
 }
